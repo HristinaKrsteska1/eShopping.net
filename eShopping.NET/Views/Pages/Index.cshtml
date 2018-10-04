@@ -1,0 +1,13 @@
+﻿@model eShopping.NET.Models.ViewModels.Pages.PageVM
+
+@{
+    ViewBag.Title = "ViewBag.PageTitle ";
+    TempData["PageTitle"] = ViewBag.PageTitle;
+}
+
+@Html.Raw(Model.Body)
+
+@section Scripts{
+<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+
+}
