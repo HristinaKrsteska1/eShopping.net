@@ -1,0 +1,7 @@
+﻿@model eShopping.NET.Models.ViewModels.Cart.CartVM
+
+<div class="ajaxcart" style="color: whitesmoke;">
+    Your cart: @Model.Quantity item(s) - €@Model.Price
+    <br />
+    @Html.ActionLink("CheckOut", "Index")
+</div>
