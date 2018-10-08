@@ -121,5 +121,30 @@ namespace eShopping.NET.Controllers
             // Return partial view with model
             return PartialView(model);
         }
+
+        //Get: Cart/IncrementProduct
+        public JsonResult IncrementProduct(int productId)
+        {
+            //Init cart list
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            
+            using(dbConnection db = new dbConnection())
+            {
+                //Get cartVM from the list
+                CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
+                //Increment quantity
+                model.Quantity++;
+                //Store needed data
+                var result = new { quantity = model.Quantity, price = model.Price };
+
+                //Return json with data
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
+
+
+
+        }
     }
 }
