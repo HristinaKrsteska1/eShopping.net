@@ -1,0 +1,5 @@
+﻿@model eShopping.NET.Models.ViewModels.Cart.CartVM
+
+Your cart: @Model.Quantity item(s) - €@Model.Price
+<br />
+@Html.ActionLink("CheckOut", "Index")
