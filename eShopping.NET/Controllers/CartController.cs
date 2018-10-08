@@ -55,8 +55,10 @@ namespace eShopping.NET.Controllers
                 foreach (var item in list)
                 {
                      quanity += item.Quantity;
-                      price += item.Price;
+                      price += item.Quantity * item.Price;
                 }
+                model.Quantity = quanity;
+                model.Price = price;
             }
             else
             {

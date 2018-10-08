@@ -29,14 +29,12 @@ else
                 Image
             </th>
             <th>
-
-            </th>
-            <th>
                 Total
             </th>
             <th>
 
             </th>
+
         </tr>
 
         @foreach (var item in Model)
@@ -46,23 +44,25 @@ else
             <td>
                 @Html.DisplayFor(modelItem => item.ProductName)
             </td>
-            <td>
+            <td class="quantity@(item.ProductId)">
                 @Html.DisplayFor(modelItem => item.Quantity)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                €@Html.DisplayFor(modelItem => item.Price)
             </td>
             <td>
                 <img src="/Images/Uploads/Products/@item.ProductId/Thumbs/@item.Image" />
+            </td>
+            <td class="total@(item.Total)">
+                €@Html.DisplayFor(modelItem => item.Total)
             </td>
             <td>
                 <a href="#" class="incrementProduct" data-id="@item.ProductId">+</a>
                 <a href="#" class="decrementProduct" data-id="@item.ProductId">-</a>
                 <a href="#" class="removeProduct" data-id="@item.ProductId">Remove</a>
             </td>
-            <td>
-                €@Html.DisplayFor(modelItem => item.Total)
-            </td>
+
+
         </tr>
 }
         <tr>
@@ -72,9 +72,8 @@ else
             <td></td>
             <td></td>
             <td></td>
-            <td>€@ViewBag.GrandTotal</td>
-        </tr>
-       
+            <td class="grandtotal"><b>Grand Total: </b>€<span>@ViewBag.GrandTotal</span></td>
 
+        </tr>
     </table>
 }
