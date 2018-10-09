@@ -142,9 +142,35 @@ namespace eShopping.NET.Controllers
                 return Json(result, JsonRequestBehavior.AllowGet);
 
             }
+        }
+        //GET: cart/DecrementProduct
+        public JsonResult DecrementProduct(int productId)
+        {
+            //Init cart list
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
 
 
+            using (dbConnection db = new dbConnection())
+            {
+                //Get cartVM from the list
+                CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
+                //Decrement quantity
+                if (model.Quantity > 1)
+                {
+                    model.Quantity--;
+                }
+                else
+                {
+                    model.Quantity = 0;
+                    cart.Remove(model);
+                }
+                //Store needed data
+                var result = new { quantity = model.Quantity, price = model.Price };
 
+                //Return json with data
+                return Json(result, JsonRequestBehavior.AllowGet);
+
+            }
         }
     }
 }
