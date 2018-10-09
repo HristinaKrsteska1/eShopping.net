@@ -169,8 +169,23 @@ namespace eShopping.NET.Controllers
 
                 //Return json with data
                 return Json(result, JsonRequestBehavior.AllowGet);
-
             }
+        }
+
+        //GET: cart/RemoveProduct
+        public void RemoveProduct(int productId)
+        {
+            //Init cart list
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            using (dbConnection db = new dbConnection())
+            {
+                //Get model from list
+                CartVM model = cart.FirstOrDefault(x => x.ProductId == productId);
+
+                //Remove model from list
+                cart.Remove(model);
+            }       
         }
     }
 }

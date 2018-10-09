@@ -106,7 +106,7 @@ else
 
         });
 
-
+        /* Decrement product*/
         $("a.decrementProduct").click(function (e) {
             
             e.preventDefault();
@@ -136,6 +136,20 @@ else
                 }                
             });
         });
+
+        /* Remove product */
+        $("a.removeProduct").click(function (e) {
+            e.preventDefault();
+
+            var that = $(this);
+            var productId = $(this).data("id");
+            var url = "/cart/RemoveProduct";
+
+            $.get(url, { productId: productId }, function (data) {
+                location.reload();
+            });
+        });
+
     });
 
 
