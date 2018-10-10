@@ -11,6 +11,21 @@ namespace eShopping.NET.Controllers
         // GET: Account
         public ActionResult Index()
         {
+            return Redirect("~/account/Login");
+        }
+
+        // GET: Account/Login 
+        public ActionResult Login()
+        {
+            //Confirm the user is not logged in
+
+            string username = User.Identity.Name;
+
+            if (!string.IsNullOrEmpty(username))
+            {
+                return RedirectToAction("user-profile");
+            }
+            //Return View
             return View();
         }
 
