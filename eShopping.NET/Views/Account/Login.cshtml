@@ -6,12 +6,19 @@
 
 <h2>Login</h2>
 
-@using (Html.BeginForm()) 
+@if (TempData["successMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["successMessage"]
+    </div>
+}
+
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        
+
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -25,13 +32,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.PasswordFor(model => model.Password,new { @class = "form-control" } )
+                @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2" })
+            <label class="control-label col-md-2" for="RememberMe">Remember Me</label>
             <div class="col-md-10">
                 <div class="checkbox">
                     @Html.EditorFor(model => model.RememberMe)
@@ -43,10 +50,10 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Login" class="btn btn-default" />
+                &nsub;<a href="/account/create-account">Create an account</a>
             </div>
         </div>
     </div>
 
-    <a href="/login/create-account">Create an account</a>
 }
 
