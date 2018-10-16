@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 
 namespace eShopping.NET.Controllers
 {
@@ -13,10 +14,11 @@ namespace eShopping.NET.Controllers
         // GET: Account
         public ActionResult Index()
         {
-            return Redirect("~/account/Login");
+            return Redirect("~/account/login");
         }
 
         // GET: Account/Login 
+        [HttpGet]
         public ActionResult Login()
         {
             //Confirm the user is not logged in
@@ -31,6 +33,38 @@ namespace eShopping.NET.Controllers
             return View();
         }
 
+        //POST:/account/login
+        [HttpPost]
+        public ActionResult Login(LoginUserVM model)
+        {
+            //Check if model is valid
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            //Check if the user is valid
+            bool isValid = false;
+
+            using(dbConnection db = new dbConnection())
+            {
+                if(db.Users.Any(x=>x.Username.Equals(model.Username) && x.Password.Equals(model.Password)))
+                {
+                    isValid = true;
+                }
+            }
+
+            if (! isValid)
+            {
+                ModelState.AddModelError("", "Invalid username or password");
+                return View(model);
+            }
+            else
+            {
+                FormsAuthentication.SetAuthCookie(model.Username, model.RememberMe);
+                return Redirect(FormsAuthentication.GetRedirectUrl(model.Username, model.RememberMe));
+            }
+        }
+
         //GET:/account/create-account
         [ActionName("create-account")]
         [HttpGet]
@@ -39,6 +73,7 @@ namespace eShopping.NET.Controllers
             return View("CreateAccount");
         }
 
+        //POST:/account/create-account
         [ActionName("create-account")]
         [HttpPost]
         public ActionResult CreateAccount(UserVM model)
@@ -96,9 +131,15 @@ namespace eShopping.NET.Controllers
             TempData["successMessage"] = "You are now registered and can login";
 
             //Redirect
-            return Redirect("~/account/Login");
+            return Redirect("~/account/login");
         }
 
 
+        //POST: /Account/Logout
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            return Redirect("~/account/login");
+        }
     }
 }
