@@ -134,12 +134,34 @@ namespace eShopping.NET.Controllers
             return Redirect("~/account/login");
         }
 
-
         //POST: /Account/Logout
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return Redirect("~/account/login");
+        }
+
+        public ActionResult UserNavPartial()
+        {
+            //Get username
+            string username = User.Identity.Name;
+            //Declare model
+            UserNavPartialVM model;
+
+            using(dbConnection db = new dbConnection())
+            {
+                //Get the user
+                UserDTO dto = db.Users.FirstOrDefault(x => x.Username == username);
+
+                //Build the model
+                model = new UserNavPartialVM
+                {
+                    FirstName = dto.FirstName,
+                    LastName = dto.LastName
+                };
+            }
+            //Return partial view with model
+            return PartialView(model);            
         }
     }
 }
