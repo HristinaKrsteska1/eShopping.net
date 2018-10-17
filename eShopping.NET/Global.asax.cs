@@ -1,6 +1,8 @@
-﻿using System;
+﻿using eShopping.NET.Models.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -16,6 +18,35 @@ namespace eShopping.NET
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+        }
+
+        protected void Application_AuthenticateRequest()
+        {
+            //Check if user is loged in
+            if( User == null) { return; }
+
+            //Get username
+            string username = Context.User.Identity.Name;
+
+            //Declare array of roles
+            string[] roles = null;
+            
+            using(dbConnection db = new dbConnection())
+            {
+                //Populate roles
+                UserDTO dto = db.Users.FirstOrDefault(x => x.Username == username);
+
+                roles = db.UserRoles.Where(x => x.UserId == dto.Id).Select(x => x.Role.Name).ToArray();
+
+            }
+
+            //Build IPrincipal Object
+
+            IIdentity userIdentity = new GenericIdentity(username);
+            IPrincipal newUserObject = new GenericPrincipal(userIdentity, roles);
+
+            //Update Context.User
+            Context.User = newUserObject;
         }
     }
 }
