@@ -176,6 +176,8 @@
     </Compile>
     <Compile Include="Models\Data\CategoryDTO.cs" />
     <Compile Include="Models\Data\dbConnection.cs" />
+    <Compile Include="Models\Data\OrderDetailsDTO.cs" />
+    <Compile Include="Models\Data\OrderDTO.cs" />
     <Compile Include="Models\Data\pageDTO.cs" />
     <Compile Include="Models\Data\RoleDTO.cs" />
     <Compile Include="Models\Data\SidebarDTO.cs" />

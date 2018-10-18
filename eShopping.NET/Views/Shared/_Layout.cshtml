@@ -40,12 +40,12 @@
                     {
                         if(ViewBag.Title == "User Profile")
                         {
-                            <li class="active">@Html.Action("UserNavPartial", "Account", new { area = ""})</li>
+                           <li class="active">@Html.Action("UserNavPartial", "Account", new { area = ""})</li>
 
                         }
                         else
                         {
-                             <li>@Html.Action("UserNavPartial", "Account", new { area = ""})</li>
+                           <li>@Html.Action("UserNavPartial", "Account", new { area = ""})</li>
 
                         }
                     }
@@ -60,7 +60,6 @@
                 {
                     if(ViewBag.Title != "Cart Details")
                     {
-
                         <ul class="navbar-collapse collapse navbar-right">
                              @Html.Action("CartPartial", "Cart")
                         </ul>
@@ -90,11 +89,8 @@
                     @RenderBody()
                 </div>
             }
-
         </div>
-
         <hr />
-
     </div>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
