@@ -27,9 +27,9 @@
                     }
                     else
                     {
-                        if(ViewBag.Title == "Login")
+                        if (ViewBag.Title == "Login")
                         {
-                           <li class="active"><a href="/account/login">Login</a></li>
+                            <li class="active"><a href="/account/login">Login</a></li>
                         }
                         else
                         {
@@ -38,34 +38,34 @@
                     }
                     @if (Request.IsAuthenticated && User.IsInRole("User"))
                     {
-                        if(ViewBag.Title == "User Profile")
+                        if (ViewBag.Title == "User Profile")
                         {
-                           <li class="active">@Html.Action("UserNavPartial", "Account", new { area = ""})</li>
+                            <li class="active">@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
 
                         }
                         else
                         {
-                           <li>@Html.Action("UserNavPartial", "Account", new { area = ""})</li>
+                            <li>@Html.Action("UserNavPartial", "Account", new { area = "" })</li>
 
                         }
                     }
                 </ul>
-                @if(Request.IsAuthenticated && User.IsInRole("Admin"))
+                @if (Request.IsAuthenticated && User.IsInRole("Admin"))
                 {
-                 <ul class="navbar-collapse collapse navbar-right adminarea">
-                    <li>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area ="Admin"}, null)</li>
-                 </ul>
+                    <ul class="navbar-collapse collapse navbar-right adminarea" style="position:relative; top: 15px;">
+                        <li>@Html.ActionLink("Admin Area", "Index", "Dashboard", new { area = "Admin" }, null)</li>
+                    </ul>
                 }
                 else
                 {
-                    if(ViewBag.Title != "Cart Details")
+                    if (ViewBag.Title != "Cart Details")
                     {
                         <ul class="navbar-collapse collapse navbar-right">
-                             @Html.Action("CartPartial", "Cart")
+                            @Html.Action("CartPartial", "Cart")
                         </ul>
                     }
-                    
-                }                
+
+                }
             </div>
         </div>
     </div>
@@ -95,7 +95,5 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
-
-    
 </body>
 </html>
