@@ -1,0 +1,53 @@
+﻿@model IEnumerable<eShopping.NET.Models.ViewModels.Account.OrderForUserVM>
+
+@{
+    ViewBag.Title = "Orders";
+}
+
+<h2>Orders</h2>
+@if (!Model.Any())
+{
+    <h3 class="text-center">You have no orders</h3>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>
+                Order Number
+            </th>
+            <th>
+                Order Details
+            </th>
+            <th>
+                Date Created
+            </th>
+
+            <th>
+                Total
+            </th>
+        </tr>
+
+@foreach (var item in Model)
+{
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderNumber)
+            </td>
+            <td>
+               @foreach (var item2 in item.ProductsAndQuantity)
+               {
+                   @item2.Key @:x @item2.Value <br />
+               }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                €@Html.DisplayFor(modelItem => item.Total)
+            </td>
+        </tr>
+}
+
+</table>
+}
