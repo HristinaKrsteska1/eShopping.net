@@ -3,6 +3,8 @@ using eShopping.NET.Models.ViewModels.Cart;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -193,6 +195,61 @@ namespace eShopping.NET.Controllers
             List<CartVM> cart = Session["cart"] as List<CartVM>;
 
             return PartialView(cart);
+        }
+
+        //POST:/Cart/PlaceOrder
+        [HttpPost]
+        public void PlaceOrder()
+        {
+            //Get Cart List
+            List<CartVM> cart = Session["cart"] as List<CartVM>;
+
+            //Get Username
+            string username = User.Identity.Name;
+
+            //Declare OrderId
+            int orderId = 0;
+
+            using (dbConnection db = new dbConnection())
+            {
+                //Init OrderDTO
+                OrderDTO orderDTO = new OrderDTO();
+
+                //Get User id
+                var query = db.Users.FirstOrDefault(x => x.Username == username);
+                var userId = query.Id;
+                //Add to OrderDTO and save
+                orderDTO.UserId = userId;
+                orderDTO.DateCreated = DateTime.Now;
+
+                db.Orders.Add(orderDTO);
+                db.SaveChanges();
+                //Get Inserted id
+                 orderId = orderDTO.OrderId;
+                //Init OrderDetailsDTO 
+                OrderDetailsDTO orderDetailsDTO = new OrderDetailsDTO();
+                
+                //Add to OrderDetailsDTO
+                foreach (var item in cart)
+                {
+                    orderDetailsDTO.OrderId = orderId;
+                    orderDetailsDTO.UserId = userId;
+                    orderDetailsDTO.ProductId = item.ProductId;
+                    orderDetailsDTO.Quantity = item.Quantity;
+
+                    db.OrderDetails.Add(orderDetailsDTO);
+                    db.SaveChanges();
+                }
+            }
+            //Email Admin
+            var client = new SmtpClient("smtp.mailtrap.io", 2525)
+            {
+                Credentials = new NetworkCredential("925d31c2909ed3", "c98a6aff4e9757"),
+                EnableSsl = true
+            };
+            client.Send("admin@example.com", "admin@example.com", "New Order", "You have a new order. Order number" + orderId);
+            //Reset session
+            Session["cart"] = null;
         }
     }
 }

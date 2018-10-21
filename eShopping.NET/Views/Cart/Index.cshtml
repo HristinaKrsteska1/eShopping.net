@@ -88,21 +88,19 @@ else
             <input type="hidden" name="business" value="hristina.krsteska1-facilitator@gmail.com">
 
             @foreach (var item in Model)
-        {
-            <input type="hidden" name="item_name_@count" value="@item.ProductName">
-            <input type="hidden" name="amount_@count" value="@item.Price">
-            <input type="hidden" name="quantity_@count" value="@item.Quantity">
-        count++;
-    }
-
-
+             {
+                <input type="hidden" name="item_name_@count" value="@item.ProductName">
+                <input type="hidden" name="amount_@count" value="@item.Price">
+                <input type="hidden" name="quantity_@count" value="@item.Quantity">
+                 count++;
+             } 
             <input type="hidden" name="currency_code" value="Euro">
             <input type="image" src="http://www.paypal.com/en_US/i/btn/x-click-but01.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!">
         </form>
     </div>
 
     <br />
-    <a href="#" class="placeholder btn btn-primary pull-right">Checkout</a>
+    <a href="#" class="placeorder btn btn-primary pull-right">Checkout</a>
 }
 
 @section Scripts{
@@ -189,9 +187,23 @@ else
                 });
             });
 
+            /* Place order */
+            $("a.placeorder").click(function (e) {
+                e.preventDefault();
+
+                var that = $(this);
+               
+                var url = "/cart/PlaceOrder";
+
+                $(".ajaxbg").show();
+
+                $.post(url, {}, function (data) {
+                    $(".ajaxbg span").text("Thank you! You will now be redirected to PayPal.");
+                    setTimeout(function () {
+                        $('form input[name="submit"]').click();
+                    }, 1000);
+                });
+            });
         });
-
-
-
     </script>
 }
