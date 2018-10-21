@@ -8,6 +8,7 @@ using System.Web.Mvc;
 
 namespace eShopping.NET.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PagesController : Controller
     {
         // GET: Admin/Pages

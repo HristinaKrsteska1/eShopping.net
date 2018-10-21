@@ -136,12 +136,14 @@ namespace eShopping.NET.Controllers
         }
 
         //POST: /Account/Logout
+        [Authorize]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return Redirect("~/account/login");
         }
 
+        [Authorize]
         public ActionResult UserNavPartial()
         {
             //Get username
@@ -168,6 +170,7 @@ namespace eShopping.NET.Controllers
         //GET:/account/user-profile
         [HttpGet]
         [ActionName("user-profile")]
+        [Authorize]
         public ActionResult UserProfile()
         {
             //Get username
@@ -189,6 +192,7 @@ namespace eShopping.NET.Controllers
 
         [ActionName("user-profile")]
         [HttpPost]
+        [Authorize]
         public ActionResult UserProfile(UserProfileVM model)
         {
             //Check model state
@@ -241,6 +245,7 @@ namespace eShopping.NET.Controllers
         }
 
         //GET:/account/Orders
+        [Authorize(Roles = "user")]
         public ActionResult Orders()
         {
             //Init list of OrderForUserVM
