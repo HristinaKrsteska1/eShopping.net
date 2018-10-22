@@ -72,21 +72,27 @@ ul.adminarea {
 }
 
 .ajaxbg {
-    position:absolute;
+    position: absolute; 
     width: 100%;
     height: 100%;
     background: white;
     display: none;
+    z-index: 1;
+    
 }
 
-.ajaxbg span{
-    position: absolute;
-    top:50%;
-    left: 50%;
-    transform: translate3d(-50%, -50%, 0);
-}
+.ajaxbg span {
+        position: absolute;
+        top: 30%;
+        left: 50%;
+        
+    }
 
 form.paypalform{
     position:absolute;
     left: -2000px;
+}
+
+.row{
+    position: relative;
 }
